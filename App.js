@@ -1,35 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  StatusBar,
-  ImageBackground,
-  SafeAreaView,
-} from 'react-native';
+import { StyleSheet, View, StatusBar, ImageBackground } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import StartGameScreen from './screens/StartGameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 import Colors from './constants/colors';
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState();
+  const [isGameOver, setIsgameOver] = useState(false);
   const pickNumberHandler = (pickedNumber) => {
     setUserNumber(pickedNumber);
+    setIsgameOver(false);
   };
-  const [userNumber, setUserNumber] = useState();
   let screen = <StartGameScreen onPickNumber={pickNumberHandler} />;
 
+  function gameOverHandler() {
+    setIsgameOver(true);
+  }
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    );
+  }
+
+  if (isGameOver) {
+    screen = <GameOverScreen />;
   }
 
   return (
     <SafeAreaView style={styles.full}>
       <View style={styles.root}>
-        {/* <StatusBar
+        <StatusBar
           hidden={false}
           translucent={true}
           networkActivityIndicatorVisible={true}
-        /> */}
+        />
         <LinearGradient
           colors={[Colors.gradientStart, Colors.gradientEnd]}
           style={styles.full}

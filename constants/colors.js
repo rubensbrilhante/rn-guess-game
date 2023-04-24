@@ -6,6 +6,9 @@ const Colors = {
   gradientEnd: '#ddb52f',
   titleColor: '#ddb52f',
   titleBorderColor: '#ddb52f',
+  accent: '#ddb52f',
+  guessBorder: '#ddd',
+  guessTextColor: '#ddd',
 };
 
 export default Colors;
